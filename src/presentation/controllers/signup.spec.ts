@@ -1,0 +1,17 @@
+import { SignUpController } from './signUp'
+
+describe('SignUpController', () => {
+  test('should return 400 if no name provider', () => {
+    const sut = new SignUpController()
+
+    const httpRequest = {
+      body: {
+        email: 'valid_email@email.com',
+        password: 'valid_password',
+        confirmationPassword: 'valid_password'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse).toEqual(400)
+  })
+})
