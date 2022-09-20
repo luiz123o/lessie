@@ -31,4 +31,36 @@ describe('SignUpController', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('email'))
   })
+
+  test('should return 400 if no password provider', () => {
+    const sut = new SignUpController()
+
+    const httpRequest = {
+      body: {
+        name: 'valid_name',
+        email: 'valid_email@email.com',
+        confirmationPassword: 'valid_password'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new MissingParamError('password'))
+  })
+
+  test('should return 400 if no confirmation password provider', () => {
+    const sut = new SignUpController()
+
+    const httpRequest = {
+      body: {
+        name: 'valid_name',
+        email: 'valid_email@email.com',
+        password: 'valid_password'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(
+      new MissingParamError('confirmationPassword')
+    )
+  })
 })
